@@ -13,7 +13,7 @@
 | `Java version`     | 8       |
 
 * Internet connection
-* A valid [combateafraude](https://combateafraude.com) Mobile token. To get one, please mail to [Frederico Gassen](mailto:frederico.gassen@combateafraude.com)
+* A valid [combateafraude](https://combateafraude.com) Mobile token. To get one, please mail to [Daniel Seitenfus](mailto:daniel.seitenfus@combateafraude.com)
 * A physical device (how to scan a real document with a simulator?)
 
 Add this configuration in your app-level `build.gradle`:
