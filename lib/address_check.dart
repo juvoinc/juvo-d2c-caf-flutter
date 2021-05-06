@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'result/address_check_closed.dart';
@@ -10,12 +12,12 @@ class AddressCheck {
   static const MethodChannel _channel = const MethodChannel('address_check');
 
   String mobileToken;
-  String peopleId;
-  bool useAnalytics;
-  int requestTimeout;
-  Address address;
+  String? peopleId;
+  bool? useAnalytics;
+  int? requestTimeout;
+  Address? address;
 
-  AddressCheck({@required this.mobileToken});
+  AddressCheck({required this.mobileToken});
 
   void setPeopleId(String peopleId) {
     this.peopleId = peopleId;
@@ -41,11 +43,13 @@ class AddressCheck {
     params["useAnalytics"] = useAnalytics;
     params["requestTimeout"] = requestTimeout;
     params["address"] = address?.asMap();
-
     Map<dynamic, dynamic> resultMap =
         await _channel.invokeMethod('start', params);
 
-    bool success = resultMap["success"];
+    //Map<dynamic, dynamic> resultMap = await (_channel.invokeMethod(
+    //  'start', params) as Future<Map<dynamic, dynamic>>);
+
+    bool? success = resultMap["success"];
     return new AddressCheckResult(success);
   }
 }

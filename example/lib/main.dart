@@ -25,7 +25,8 @@ class _MyAppState extends State<MyApp> {
   final ThoroughfareController = TextEditingController(text: "Av. Azenha");
   final SubThoroughfareController = TextEditingController(text: "200");
   final PostalCodeController = TextEditingController(text: "51110-100");
-  String mobileToken = "";
+  String mobileToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1ZjMyYWY1NzdmMWNlNDAwMDdkNjFiNDQiLCJpYXQiOjE1MTYyMzkwMjJ9.kjOW7esYdoHVdOrQrVQAA2UGFq5mUM2ZA2Bi9fl1Ewg";
   @override
   void initState() {
     super.initState();

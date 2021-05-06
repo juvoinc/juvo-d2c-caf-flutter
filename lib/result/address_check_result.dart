@@ -1,4 +1,4 @@
 class AddressCheckResult {
-  bool success;
+  bool? success;
   AddressCheckResult(this.success);
 }

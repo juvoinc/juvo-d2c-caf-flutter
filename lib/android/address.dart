@@ -1,17 +1,17 @@
 import 'dart:ui';
 
 class Address {
-  String _countryName;
-  String _countryCode;
-  String _adminArea;
-  String _subAdminArea;
-  String _locality;
-  String _subLocality;
-  String _thoroughfare;
-  String _subThoroughfare;
-  String _postalCode;
+  String? _countryName;
+  String? _countryCode;
+  String? _adminArea;
+  String? _subAdminArea;
+  String? _locality;
+  String? _subLocality;
+  String? _thoroughfare;
+  String? _subThoroughfare;
+  String? _postalCode;
 
-  Address({Locale locale});
+  Address({Locale? locale});
 
   void setCountryName(String countryName) {
     _countryName = countryName;
@@ -49,39 +49,39 @@ class Address {
     _postalCode = postalCode;
   }
 
-  String getCountryName() {
+  String? getCountryName() {
     return _countryName;
   }
 
-  String getCountryCode() {
+  String? getCountryCode() {
     return _countryCode;
   }
 
-  String getAdminArea() {
+  String? getAdminArea() {
     return _adminArea;
   }
 
-  String getSubAdminArea() {
+  String? getSubAdminArea() {
     return _subAdminArea;
   }
 
-  String getLocality() {
+  String? getLocality() {
     return _locality;
   }
 
-  String getSubLocality() {
+  String? getSubLocality() {
     return _subLocality;
   }
 
-  String getThoroughfare() {
+  String? getThoroughfare() {
     return _thoroughfare;
   }
 
-  String getSubThoroughfare() {
+  String? getSubThoroughfare() {
     return _subThoroughfare;
   }
 
-  String getPostalCode() {
+  String? getPostalCode() {
     return _postalCode;
   }
 
