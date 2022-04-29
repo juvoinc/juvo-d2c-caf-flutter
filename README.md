@@ -151,6 +151,7 @@ documentDetector.setShowPreview(showPreview);
 | `String? sensorLuminosityMessage`<br><br>Padrão: "Ambiente muito escuro"|;
 | `String? sensorOrientationMessage`<br><br>Padrão: "Celular não está na vertical"|;
 | `String? sensorStabilityMessage`<br><br>Padrão: "Mantenha o celular parado"|;
+| `String? popupDocumentSubtitleMessage`<br><br>Padrão: “Posicione o documento em uma mesa, centralize-o na marcação e aguarde a captura automática.”|;
 | `String? unsupportedDocumentMessage`<br><br>Padrão: "Ops, parece que este documento não é suportado. Contate-nos!"|
 | `String? wrongDocumentMessage_RG_FRONT (somente para Android)`<br><br>Padrão: "Ops, esta é a frente do RG"|
 | `String? wrongDocumentMessage_RG_BACK (somente para Android)`<br><br>Padrão: "Ops, este é o verso do RG"|
