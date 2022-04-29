@@ -14,6 +14,7 @@ class MessageSettings {
   String? notCenterYMessage;
   String? notCenterZMessage;
   String? sensorStabilityMessage;
+  String? sensorOrientationMessage;
 
   MessageSettings(
       {this.stepName,
@@ -30,7 +31,8 @@ class MessageSettings {
       this.notCenterXMessage,
       this.notCenterYMessage,
       this.notCenterZMessage,
-      this.sensorStabilityMessage});
+      this.sensorStabilityMessage,
+      this.sensorOrientationMessage});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -50,6 +52,7 @@ class MessageSettings {
     map["notCenterYMessage"] = notCenterYMessage;
     map["notCenterZMessage"] = notCenterZMessage;
     map["sensorStabilityMessage"] = sensorStabilityMessage;
+    map["sensorOrientationMessage"] = sensorOrientationMessage;
 
     return map;
   }

@@ -98,8 +98,24 @@ if (passiveFaceLivenessResult is PassiveFaceLivenessSuccess) {
 | `.enableSound(bool enable)`<br><br>Habilita/desabilita os sons. O padrão é `true` |
 | `.setNetworkSettings(int requestTimeout)`<br><br>Altera as configurações de rede padrão. O padrão é `60` segundos |
 | `.setShowPreview(ShowPreview showPreview)`<br><br> Preview para verificação de qualidade da foto |
+| `.setCaptureMode(VideoCapture videoCapture, ImageCapture imageCapture)`<br><br> Define as configurações de captura. O método aceita instâncias das classes ImageCapture e VideoCapture. |
 | `.setAndroidSettings(PassiveFaceLivenessAndroidSettings androidSettings)`<br><br>Customizações somente aplicadas em Android |
 | `.setIosSettings(PassiveFaceLivenessIosSettings iosSettings)`<br><br>Customizações somente aplicadas em iOS |
+
+| ImageCapture |
+| ---------- |
+Permite configurar a captura por imagem.
+|`bool use`<br><br>Habilita/desabilita o metodo de captura
+|`int afterPictureMillis`<br><br>Duração em milissegundos entre a captura da foto e o envio para o servidor para o mantimento do rosto e dos sensores válidos
+|`int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto
+
+| VideoCapture |
+| ---------- |
+Permite configurar a captura por video.
+|`bool use`<br><br>Habilita/desabilita o metodo de captura
+|`int time`<br><br>Duração da captura dos frames do vídeo.
+
+
 
 | ShowPreview |
 | --------- |
@@ -166,7 +182,6 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | PassiveFaceLivenessAndroidSettings constructor |
 | --------- |
 | `PassiveFaceLivenessCustomizationAndroid customization`<br><br>Customização do layout em Android da activity |
-| `CaptureSettings captureSettings`<br><br>Configuraçōes de tempos de estabilização para a captura da selfie |
 | `SensorSettingsAndroid sensorSettings`<br><br>Customização das configurações dos sensores de captura |
 | `int showButtonTime`<br><br>Altera o tempo para a exibição do botão de captura manual. O padrão é `20000` milisegundos |
 | `bool enableSwitchCameraButton`<br><br>Permite habilitar ou desabilitar o botão de inversão da câmera. O padrão é `True` |
@@ -181,20 +196,21 @@ passiveFaceLiveness.setMessageSettings(messageSettings);
 | `String redMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara vermelha padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_red_mask.png` e parametrize "my_custom_red_mask" |
 | `String whiteMaskResIdName`<br><br>Nome do drawable resource à substituir a máscara branca padrão. **Caso for usar este parâmetro, use uma máscara com a mesma área de corte, é importante para o algoritmo de detecção**. Por exemplo, salve a imagem da máscara em `ROOT_PROJECT/android/app/src/main/res/drawable/my_custom_white_mask.png` e parametrize "my_custom_white_mask" |
 
-| CaptureSettings constructor |
-| --------- |
-| `int beforePictureMillis`<br><br>Duração em milissegundos entre a primeira detecção do rosto e a efetiva captura da foto |
-| `int afterPictureMillis`<br><br>Duração em milissegundos entre a captura da foto e o envio para o servidor para o mantimento do rosto e dos sensores válidos |
-
-
 | SensorSettingsAndroid constructor |
 | --------- |
-| `SensorStabilitySettingsAndroid sensorStabilitySettings`<br><br>Configurações do sensor de orientação à ser aplicado em todos os passos do SDK |
+| `SensorStabilitySettingsAndroid sensorStabilitySettings`<br><br>Configurações do sensor de estabilidade à ser aplicado em todos os passos do SDK |
+| `SensorOrientationAndroid sensorOrientationAndroid`<br><br>Configurações do sensor de orientação à ser aplicado em todos os passos do SDK |
 
 | SensorStabilitySettingsAndroid constructor |
 | --------- |
 | `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o celular não estiver estável. A mensagem padrão é "Mantenha o celular parado". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_stability_string` e valor "Teste" e parametrize "my_custom_stability_string" |
-| `int stabilityStabledMillis`<br><br>Quantos milissegundos o celular deve se manter no limiar correto para ser considerado estável. O padrão é `2000` ms |
+| `int stabilityStabledMillis`<br><br>Quantos milissegundos o celular deve se manter no limiar correto para ser considerado estável. O padrão é `1500` ms |
+| `double stabilityThreshold`<br><br>Limiar que define o celular como instável. O padrão é 0.7 m/s² |
+
+| SensorOrientationAndroid constructor |
+| ------- |
+| `String messageResourceIdName`<br><br>Nome do string resource à ser mostrado quando o celular não estiver na orientação correta. A mensagem padrão é "Celular não está na vertical". Por exemplo, caso deseje mostrar a String "Teste", crie uma String em `ROOT_PROJECT/android/app/src/main/res/values/strings.xml` com o nome `R.string.my_custom_orientation_string` e valor "Teste" e parametrize "my_custom_orientation_string" |
+| `double stabilityThreshold`<br><br>Limiar que define a orientação como inválida. O padrão é 3 m/s² |
 
 #### iOS
 

@@ -15,6 +15,7 @@ import com.combateafraude.passivefaceliveness.input.MessageSettings;
 import com.combateafraude.passivefaceliveness.input.PreviewSettings;
 import com.combateafraude.passivefaceliveness.input.PassiveFaceLiveness;
 import com.combateafraude.passivefaceliveness.input.SensorStabilitySettings;
+import com.combateafraude.passivefaceliveness.input.SensorOrientationSettings;
 import com.combateafraude.passivefaceliveness.output.PassiveFaceLivenessResult;
 import com.combateafraude.passivefaceliveness.output.failure.SDKFailure;
 
@@ -110,6 +111,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
             String notCenterZMessage = (String) messageSettingsParam.get("notCenterZMessage");
 
             String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
+            String sensorOrientationMessage = (String) messageSettingsParam.get("sensorOrientationMessage");
 
             MessageSettings messageSettings = new MessageSettings(
                 stepName,
@@ -127,7 +129,7 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 notCenterYMessage,
                 notCenterZMessage,
                 null,
-                null,
+                sensorOrientationMessage,
                 sensorStabilityMessage
             );
 
@@ -165,37 +167,16 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 } else {
                     mPassiveFaceLivenessBuilder.setStabilitySensorSettings(null);
                 }
-            }
 
-            //VideoCapture
-            HashMap<String, Object> videoCapture = (HashMap<String, Object>) argumentsMap.get("videoCapture");
-            if(videoCapture != null){
-                boolean use = (Boolean) videoCapture.get("use");
-                Integer time = (Integer) videoCapture.get("time");
-
-                if(use){
-                    if(time != null){
-                        mPassiveFaceLivenessBuilder.setCaptureSettings(new VideoCapture(time));
-                    }else{
-                        mPassiveFaceLivenessBuilder.setCaptureSettings(new VideoCapture());
+                HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) androidSettings.get("sensorOrientationAndroid");
+                if(sensorOrientation != null){
+                    Integer messageResourceIdName = (Integer) sensorOrientation.get("messageResourceIdName");
+                    Double stabilityThreshold = (Double) sensorOrientation.get("stabilityThreshold");
+                    if (messageResourceIdName != null && stabilityThreshold != null){
+                        SensorOrientationSettings sensorOrientationSettings = new SensorOrientationSettings(stabilityThreshold);
+                        mPassiveFaceLivenessBuilder.setOrientationSensorSettings(sensorOrientationSettings);
                     }
-                }       
-            }
-
-            //ImageCapture
-            HashMap<String, Object> imageCapture = (HashMap<String, Object>) argumentsMap.get("imageCapture");
-            if(imageCapture != null){
-                boolean use = (Boolean) imageCapture.get("use");
-                Integer afterPictureMillis = (Integer) imageCapture.get("afterPictureMillis");
-                Integer beforePictureMillis = (Integer) imageCapture.get("beforePictureMillis");
-
-                if(use){
-                    if(afterPictureMillis != null && beforePictureMillis != null){
-                        mPassiveFaceLivenessBuilder.setCaptureSettings(new ImageCapture(afterPictureMillis, beforePictureMillis));
-                    }else{
-                        mPassiveFaceLivenessBuilder.setCaptureSettings(new ImageCapture());
-                    }
-                } 
+                }
             }
 
             if (androidSettings.get("showButtonTime") != null){
@@ -212,6 +193,37 @@ public class PassiveFaceLivenessPlugin implements FlutterPlugin, MethodCallHandl
                 boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
                 mPassiveFaceLivenessBuilder.enableGoogleServices(enableGoogleServices);
             }
+        }
+
+        //VideoCapture
+        HashMap<String, Object> videoCapture = (HashMap<String, Object>) argumentsMap.get("videoCapture");
+        if(videoCapture != null){
+            boolean use = (Boolean) videoCapture.get("use");
+            Integer time = (Integer) videoCapture.get("time");
+
+            if(use){
+                if(time != null){
+                    mPassiveFaceLivenessBuilder.setCaptureSettings(new VideoCapture(time));
+                }else{
+                    mPassiveFaceLivenessBuilder.setCaptureSettings(new VideoCapture());
+                }
+            }       
+        }
+
+        //ImageCapture
+        HashMap<String, Object> imageCapture = (HashMap<String, Object>) argumentsMap.get("imageCapture");
+        if(imageCapture != null){
+            boolean use = (Boolean) imageCapture.get("use");
+            Integer afterPictureMillis = (Integer) imageCapture.get("afterPictureMillis");
+            Integer beforePictureMillis = (Integer) imageCapture.get("beforePictureMillis");
+
+            if(use){
+                if(afterPictureMillis != null && beforePictureMillis != null){
+                    mPassiveFaceLivenessBuilder.setCaptureSettings(new ImageCapture(afterPictureMillis, beforePictureMillis));
+                }else{
+                    mPassiveFaceLivenessBuilder.setCaptureSettings(new ImageCapture());
+                }
+            } 
         }
 
         // Sound settings
