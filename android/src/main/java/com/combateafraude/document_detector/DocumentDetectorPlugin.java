@@ -115,7 +115,8 @@ public class DocumentDetectorPlugin
         }
         mDocumentDetectorBuilder.setDocumentSteps(documentDetectorSteps);
 
-//Integer layoutId = getResourceId((String) customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
+        // Integer layoutId = getResourceId((String)
+        // customizationAndroid.get("layoutResIdName"), LAYOUT_RES);
 
         // Preview
         HashMap<String, Object> showPreview = (HashMap<String, Object>) argumentsMap.get("showPreview");
@@ -144,7 +145,6 @@ public class DocumentDetectorPlugin
             String sensorOrientationMessage = (String) messageSettingsParam.get("sensorOrientationMessage");
             String sensorStabilityMessage = (String) messageSettingsParam.get("sensorStabilityMessage");
             String popupDocumentSubtitleMessage = (String) messageSettingsParam.get("popupDocumentSubtitleMessage");
-            
 
             Document.RG_FRONT.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_FRONT");
             Document.RG_BACK.wrongDocumentFoundMessage = (String) messageSettingsParam.get("wrongDocumentMessage_RG_BACK");
@@ -255,16 +255,6 @@ public class DocumentDetectorPlugin
                     mDocumentDetectorBuilder.setLuminositySensorSettings(null);
                 }
 
-                if(androidSettings.get("enableSwitchCameraButton") != null){
-                    boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
-                    mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
-                }
-
-                if(androidSettings.get("enableGoogleServices") != null){
-                    boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
-                    mDocumentDetectorBuilder.enableGoogleServices(enableGoogleServices);
-                }
-
                 HashMap<String, Object> sensorOrientation = (HashMap<String, Object>) sensorSettings
                         .get("sensorOrientationSettings");
                 if (sensorOrientation != null) {
@@ -283,11 +273,32 @@ public class DocumentDetectorPlugin
                     Integer stabilityStabledMillis = (Integer) sensorStability.get("stabilityStabledMillis");
                     Double stabilityThreshold = (Double) sensorStability.get("stabilityThreshold");
                     if (stabilityStabledMillis != null && stabilityThreshold != null) {
-                        mDocumentDetectorBuilder.setStabilitySensorSettings(new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
+                        mDocumentDetectorBuilder.setStabilitySensorSettings(
+                                new SensorStabilitySettings(stabilityStabledMillis, stabilityThreshold));
                     }
                 } else {
                     mDocumentDetectorBuilder.setStabilitySensorSettings(null);
                 }
+            }
+
+            if (androidSettings.get("enableSwitchCameraButton") != null) {
+                boolean enableSwitchCameraButton = (boolean) androidSettings.get("enableSwitchCameraButton");
+                mDocumentDetectorBuilder.enableSwitchCameraButton(enableSwitchCameraButton);
+            }
+
+            if (androidSettings.get("enableGoogleServices") != null) {
+                boolean enableGoogleServices = (boolean) androidSettings.get("enableGoogleServices");
+                mDocumentDetectorBuilder.enableGoogleServices(enableGoogleServices);
+            }
+
+            if (androidSettings.get("useEmulator") != null) {
+                Boolean useEmulator = (Boolean) androidSettings.get("useEmulator");
+                mDocumentDetectorBuilder.setUseEmulator(useEmulator);
+            }
+
+            if (androidSettings.get("useRoot") != null) {
+                Boolean useRoot = (Boolean) androidSettings.get("useRoot");
+                mDocumentDetectorBuilder.setUseRoot(useRoot);
             }
         }
 
@@ -337,12 +348,14 @@ public class DocumentDetectorPlugin
         responseMap.put("success", Boolean.TRUE);
         ArrayList<HashMap<String, Object>> captures = new ArrayList<>();
         for (Capture capture : mDocumentDetectorResult.getCaptures()) {
-            HashMap<String, Object> captureResponse = new HashMap<>();
-            captureResponse.put("imagePath", capture.getImagePath());
-            captureResponse.put("imageUrl", capture.getImageUrl());
-            captureResponse.put("label", capture.getLabel());
-            captureResponse.put("quality", capture.getQuality());
-            captures.add(captureResponse);
+            if (capture != null) {
+                HashMap<String, Object> captureResponse = new HashMap<>();
+                captureResponse.put("imagePath", capture.getImagePath());
+                captureResponse.put("imageUrl", capture.getImageUrl());
+                captureResponse.put("label", capture.getLabel());
+                captureResponse.put("quality", capture.getQuality());
+                captures.add(captureResponse);
+            }
         }
         responseMap.put("captures", captures);
         responseMap.put("type", mDocumentDetectorResult.getType());

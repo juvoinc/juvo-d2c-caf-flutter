@@ -8,13 +8,17 @@ class DocumentDetectorAndroidSettings {
   List<CaptureStage>? captureStages;
   bool? enableSwitchCameraButton;
   bool? enableGoogleServices;
+  bool? useRoot;
+  bool? useEmulator;
 
   DocumentDetectorAndroidSettings(
       {this.customization,
       this.sensorSettings,
       this.captureStages,
       this.enableSwitchCameraButton,
-      this.enableGoogleServices});
+      this.enableGoogleServices,
+      this.useEmulator,
+      this.useRoot});
 
   Map asMap() {
     Map<String, dynamic> map = new Map();
@@ -23,6 +27,8 @@ class DocumentDetectorAndroidSettings {
     map["sensorSettings"] = sensorSettings?.asMap();
     map["enableSwitchCameraButton"] = enableSwitchCameraButton;
     map["enableGoogleServices"] = enableGoogleServices;
+    map["useEmulator"] = useEmulator;
+    map["useRoot"] = useRoot;
 
     if (captureStages != null) {
       List<Map<String, dynamic>> stagesMap = [];
